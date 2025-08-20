@@ -222,7 +222,7 @@ def main():
 
 def jogar():
     while True:
-        main()  # chama a função principal do jogo
+        main()
 
         print("\nDeseja jogar novamente? (s/n)")
         resposta = input("> ").lower()
