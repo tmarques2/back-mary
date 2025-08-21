@@ -48,31 +48,57 @@ class Tamagoshi:
         self.tedio += 2.5
         self.fome += 5
 
+
+    def status(self):
+        print("\n===== STATUS DO PET =====")
+        print(f"Nome: {self.nome}")
+        print(f"Idade: {self.idade:.1f}")
+        print(f"Saúde: {self.saude}")
+        print(f"Fome: {self.fome}")
+        print(f"Tédio: {self.tedio}")
+        if hasattr(self, "felicidade"):
+            print(f"Felicidade: {self.felicidade}")
+        if hasattr(self, "motivacao"):
+            print(f"Motivação: {self.motivacao}")
+        if hasattr(self, "aura"):
+            print(f"Aura: {self.aura}")
+        if hasattr(self, "adrenalina"):
+            print(f"Adrenalina: {self.adrenalina}")
+        print("=========================\n")
+
+
 class TamagoshiDepressivo(Tamagoshi):
     def __init__(self, nome):
         super().__init__(nome)
         self.felicidade = 0
-        self.motivacao = 50
+        self.motivacao = 10
         self.frases_tristes = ["quero me matar",
                                "tomara que eu morra hoje às 23:99",
                                "queria uma arma...",
                                "Você foi muito especial pra mim, adeus"]
 
     def ouvirMusgaTriste(self):
-        print(f"{self.nome} está ouvindo musga triste :(")
+        limpar_tela()
+        print(f"{self.nome} está ouvindo musga triste :(\n")
+        print("Felicidade -1 \nMotivação -5")
         self.felicidade -= 1
         self.motivacao -= 5
 
     def fumar(self):
+        limpar_tela()
         print(f"{self.nome} acendeu o cigarro...")
         frase = random.choice(self.frases_tristes)
-        print(f"💭 {frase}")
+        print(f"💭 {frase}\n")
+        print("Felicidade +1 \nMotivação -5")
         self.felicidade += 1
         self.motivacao -= 5
+        self.saude -= 5
 
     
     def terapia(self):
-        print(f"{self.nome} está fazendo terapia...")
+        limpar_tela()
+        print(f"{self.nome} está fazendo terapia...\n")
+        print("Motivação +20 \nFelicidade +15 \nSaúde +10")
         self.motivacao += 20
         self.felicidade += 15
         self.saude += 10
@@ -84,23 +110,33 @@ class TamagoshiSigma(Tamagoshi):
         self.aura = 50
     
     def cara_de_sigma(self):
-        print("🗿🧏🤫")
+        limpar_tela()
+        print("🗿🧏🤫\n")
+        print("Aura +40")
         self.aura += 40
     
     def old_money(self):
-        print("Vestindo camisa social, calça de alfaiataria, sapato social e sueter")
+        limpar_tela()
+        print("Vestindo camisa social, calça de alfaiataria, sapato social e sueter\n")
+        print("Aura +10")
         self.aura += 10
     
     def clear_man_CR7(self):
-        print(f"{self.nome} usou clear man do Cristiano Ronaldo e agora está com o cabelo cheiroso e sedoso")
+        limpar_tela()
+        print(f"{self.nome} usou clear man do Cristiano Ronaldo e agora está com o cabelo cheiroso e sedoso\n")
+        print("Aura +30")
         self.aura += 30
     
     def chorar(self):
-        print(f"{self.nome} não tankou a opressão da sociedade e chorou")
-        self.aura -= 50
+        limpar_tela()
+        print(f"{self.nome} não tankou a opressão da sociedade e chorou\n")
+        print("Aura -40")
+        self.aura -= 40
     
     def skincare(self):
+        limpar_tela()
         print(f"{self.nome} quis cuidar da pele facial...")
+        print("Aura -10")
         self.aura -= 10
 
 
@@ -111,17 +147,24 @@ class TamagoshiRockeiro(Tamagoshi):
         self.adrenalina = 50
     
     def tocar_guitarra(self):
-        print(f"{self.nome} está tocando guitarra!! 🤘🤘🤘🤘🤘🤘🤘🤘🤘🤘🤘🤘🤘")
+        limpar_tela()
+        print(f"{self.nome} está tocando guitarra!! 🤘🤘🤘🤘🤘🤘🤘🤘🤘🤘🤘🤘🤘\n")
+        print("Felicidade +20 \nAdrenalina +30")
         self.felicidade += 20
         self.adrenalina += 30
     
     def show(self):
-        print(f"{self.nome} realizou um sonho e foi no show do System of a Down")
+        limpar_tela()
+        print(f"{self.nome} realizou um sonho e foi no show do System of a Down\n")
+        print("Felicidade +50 \nAdrenalina +40")
         self.felicidade += 50
         self.adrenalina += 40
     
     def maquiagem(self):
+        limpar_tela()
         print(f"{self.nome} fez uma maquiagem dark 🤘")
+        print("Felicidade +10")
+        self.felicidade += 10
 
 
 
@@ -150,7 +193,7 @@ def main():
         pet = Tamagoshi(nome)
         
     while True:
-        
+        pet.status()
         print("\nO que deseja fazer: ")
         print("1 - Alimentar")
         print("2 - Brincar")
