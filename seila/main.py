@@ -71,12 +71,29 @@ class MyHandle (SimpleHTTPRequestHandler):
         elif self.path == "/listar_filmes":
             try:
                 with open(os.path.join(os.getcwd(), "listar_filmes.html"), encoding='utf-8') as listar_filmes:
-                    content = listar_filmes.read()
+                    html = listar_filmes.read()
+
+                linhas = ""
+                for filme in filmes:
+                    linhas += f"""
+                    <tr>
+                        <td>{filme['nome']}</td>
+                        <td>{filme['atores']}</td>
+                        <td>{filme['diretor']}</td>
+                        <td>{filme['ano']}</td>
+                        <td>{filme['genero']}</td>
+                        <td>{filme['produtora']}</td>
+                        <td>{filme['sinopse']}</td>
+                    </tr>
+                    """
+
+                # Substituir um marcador no HTML pelas linhas geradas
+                html = html.replace("<!-- LISTA_DE_FILMES -->", linhas)
 
                 self.send_response(200)
                 self.send_header("Content-type", "text/html")
                 self.end_headers()
-                self.wfile.write(content.encode('utf-8'))
+                self.wfile.write(html.encode('utf-8'))
 
             except FileNotFoundError:
                 self.send_error(404, "File Not Found")
