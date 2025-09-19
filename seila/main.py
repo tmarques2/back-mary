@@ -16,6 +16,7 @@ server.serve_forever()'''
 
 import os
 from http.server import SimpleHTTPRequestHandler, HTTPServer
+from urllib.parse import parse_qs
 
 class MyHandle (SimpleHTTPRequestHandler):
     def list_directory(self, path):
@@ -30,6 +31,15 @@ class MyHandle (SimpleHTTPRequestHandler):
         except FileNotFoundError:
             pass
         return super().list_directory(path)
+    
+    def accont_user(self, login, password):
+        loga = "thainara@gmail.com"
+        senha = "123456"
+
+        if login == loga and senha == password:
+            return "Usuário logado"
+        else:
+            return "Usuário inexistente"
 
     def do_GET(self):
         if self.path == "/login":
@@ -73,6 +83,75 @@ class MyHandle (SimpleHTTPRequestHandler):
 
         else:
             super().do_GET()
+    
+    def do_POST(self):
+        if self.path == '/sendlogin':
+            content_length = int(self.headers['Content-length'])
+            body = self.rfile.read(content_length).decode('utf-8')
+            form_data = parse_qs(body)
+
+            login = form_data.get('email', [""])[0]
+            password = form_data.get('password', [""])[0]
+
+            logou = self.accont_user(login, password)
+
+            print("Data Form: ")
+            print("Email: ", form_data.get('email', [""])[0])
+            print("Password: ", form_data.get('password', [""])[0])
+
+            self.send_response(200)
+            self.send_header("Content-type", "text/html")
+            self.end_headers()
+            self.wfile.write(logou. encode('utf-8'))
+
+        elif self.path == '/sendfilme':
+            content_length = int(self.headers['Content-length'])
+            body = self.rfile.read(content_length).decode('utf-8')
+            form_data = parse_qs(body)
+
+            
+
+            nome = form_data.get('nome', [""])[0]
+            atores = form_data.get('atores', [""])[0]
+            diretor = form_data.get('diretor', [""])[0]
+            ano = form_data.get('ano', [""])[0]
+            genero = form_data.get('genero', [""])[0]
+            produtora = form_data.get('produtora', [""])[0]
+            sinopse = form_data.get('sinopse', [""])[0]
+
+            filme = {
+                'nome': nome,
+                'atores': atores,
+                'diretor': diretor,
+                'ano': ano,
+                'genero': genero,
+                'produtora': produtora,
+                'sinopse': sinopse
+            }
+
+            filmes.append(filme)
+
+
+            print("\n--- Dados do Filme Recebido ---")
+            print("Nome: ", nome)
+            print("Atores: ", atores)
+            print("Diretor: ", diretor)
+            print("Ano: ", ano)
+            print("Gênero: ", genero)
+            print("Produtora: ", produtora)
+            print("Sinopse: ", sinopse)
+            print("-------------------------------\n")
+
+            self.send_response(200)
+            self.send_header("Content-type", "text/html")
+            self.end_headers()
+            self.wfile.write("filme adicionado".encode('utf-8'))
+
+        else:
+            super(MyHandle, self).do_POST()
+
+
+filmes = []
 
 def main():
     server_address = ('', 8000)
