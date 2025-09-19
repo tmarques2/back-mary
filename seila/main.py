@@ -87,7 +87,6 @@ class MyHandle (SimpleHTTPRequestHandler):
                     </tr>
                     """
 
-                # Substituir um marcador no HTML pelas linhas geradas
                 html = html.replace("<!-- LISTA_DE_FILMES -->", linhas)
 
                 self.send_response(200)
