@@ -17,6 +17,7 @@ server.serve_forever()'''
 import os
 from http.server import SimpleHTTPRequestHandler, HTTPServer
 from urllib.parse import parse_qs
+import json
 
 class MyHandle (SimpleHTTPRequestHandler):
     def list_directory(self, path):
@@ -176,3 +177,44 @@ def main():
     httpd.serve_forever()
 
 main()
+
+
+
+#jeito da mary
+#aq é a minha lista flmes, no dela o nome é jsum
+'''arquivo = "dados.json"
+
+if os.path.exists(arquivo):
+    with open(arquivo, encoding="utf-8") as listinha:
+        try:
+            filmes = json.load(listinha)
+        except json.JSONDecoderError:
+            filmes = []
+    filmes.append(jsum)
+else:
+    filmes = [jsum]
+
+with open(arquivo, 'w', encoding='utf-8') as lista:
+    json.dump(filmes, lista, indent=4, ensure_ascii=False)
+
+self.send_response(200)
+self.send_header("Content-type", "application/json")
+self.end_headers()
+self.wfile.write(str(jsum).encode('utf-8'))'''
+
+"""elif self.path == "/get_listinha":
+    arquivo = "dados.json"
+
+    if os.path.exists(arquivo):
+        with open (arquivo, encoding='utf-8') as listagem:
+            try:
+                filmes = json.load(listagem)
+            except json.JSONEncoderError:
+                filmes = []
+    else:
+        filmes = []
+    
+    self.send_response(200)
+    self.send_header("content-type", "application/json")
+    self.end_headers()
+    self.wfile.write(json.dumps{filmes}.encode{"utf-8"})"""
